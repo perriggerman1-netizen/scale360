@@ -1,1 +1,652 @@
-# scale360
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scale360 - Servicios</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+–black: #0a0a0a;
+–dark: #111111;
+–card: #161616;
+–border: #2a2a2a;
+–silver: #c0c0c0;
+–silver-light: #e8e8e8;
+–white: #ffffff;
+–accent: #888888;
+}
+
+body {
+background: var(–black);
+color: var(–white);
+font-family: ‘Inter’, sans-serif;
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+/* NAV DOTS */
+.nav-dots {
+position: fixed;
+right: 20px;
+top: 50%;
+transform: translateY(-50%);
+display: flex;
+flex-direction: column;
+gap: 10px;
+z-index: 100;
+}
+.nav-dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+background: var(–border);
+cursor: pointer;
+transition: all 0.3s;
+}
+.nav-dot.active { background: var(–silver); transform: scale(1.4); }
+
+/* SLIDES */
+.slide {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 60px 40px;
+position: relative;
+overflow: hidden;
+}
+
+/* SLIDE 1 - HERO */
+.slide-hero {
+background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 70%);
+flex-direction: column;
+text-align: center;
+gap: 32px;
+}
+.slide-hero::before {
+content: ‘’;
+position: absolute;
+width: 600px; height: 600px;
+border-radius: 50%;
+border: 1px solid #1f1f1f;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+animation: rotate 20s linear infinite;
+}
+.slide-hero::after {
+content: ‘’;
+position: absolute;
+width: 400px; height: 400px;
+border-radius: 50%;
+border: 1px solid #222;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+animation: rotate 12s linear infinite reverse;
+}
+@keyframes rotate { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+.logo-container {
+position: relative; z-index: 2;
+}
+.logo-text {
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 72px;
+font-weight: 700;
+letter-spacing: 6px;
+background: linear-gradient(135deg, #ffffff 0%, #c0c0c0 50%, #888888 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+line-height: 1;
+}
+.logo-sub {
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 28px;
+letter-spacing: 12px;
+color: var(–silver);
+margin-top: 4px;
+}
+.hero-tagline {
+position: relative; z-index: 2;
+font-size: 16px;
+color: var(–accent);
+letter-spacing: 3px;
+text-transform: uppercase;
+}
+.hero-divider {
+width: 80px; height: 1px;
+background: linear-gradient(to right, transparent, var(–silver), transparent);
+margin: 0 auto;
+}
+.hero-desc {
+position: relative; z-index: 2;
+font-size: 15px;
+color: #888;
+max-width: 480px;
+line-height: 1.7;
+}
+.scroll-hint {
+position: absolute;
+bottom: 30px;
+font-size: 12px;
+color: #444;
+letter-spacing: 2px;
+text-transform: uppercase;
+animation: bounce 2s ease-in-out infinite;
+}
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+/* SLIDE 2 - SERVICIOS */
+.slide-services {
+background: var(–dark);
+flex-direction: column;
+gap: 48px;
+}
+.section-header {
+text-align: center;
+}
+.section-label {
+font-size: 11px;
+letter-spacing: 4px;
+color: var(–accent);
+text-transform: uppercase;
+margin-bottom: 12px;
+}
+.section-title {
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 42px;
+font-weight: 700;
+color: var(–white);
+letter-spacing: 2px;
+}
+.section-title span {
+background: linear-gradient(135deg, #fff, #888);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.services-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 24px;
+max-width: 900px;
+width: 100%;
+}
+.service-card {
+background: var(–card);
+border: 1px solid var(–border);
+border-radius: 16px;
+padding: 32px 24px;
+text-align: center;
+position: relative;
+overflow: hidden;
+transition: transform 0.3s, border-color 0.3s;
+}
+.service-card:hover {
+transform: translateY(-6px);
+border-color: var(–silver);
+}
+.service-card::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 2px;
+background: linear-gradient(to right, transparent, var(–silver), transparent);
+}
+.service-icon {
+font-size: 36px;
+margin-bottom: 16px;
+}
+.service-name {
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 20px;
+font-weight: 700;
+color: var(–white);
+letter-spacing: 1px;
+margin-bottom: 10px;
+}
+.service-desc {
+font-size: 13px;
+color: #666;
+line-height: 1.6;
+}
+
+/* SLIDE 3 - PLANES */
+.slide-plans {
+background: var(–black);
+flex-direction: column;
+gap: 48px;
+padding: 60px 20px;
+}
+.plans-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 20px;
+max-width: 1000px;
+width: 100%;
+align-items: start;
+}
+.plan-card {
+background: var(–card);
+border: 1px solid var(–border);
+border-radius: 20px;
+padding: 36px 28px;
+position: relative;
+overflow: hidden;
+transition: transform 0.3s;
+}
+.plan-card:hover { transform: translateY(-8px); }
+
+.plan-card.featured {
+border-color: var(–silver);
+background: #131313;
+transform: scale(1.04);
+}
+.plan-card.featured:hover { transform: scale(1.04) translateY(-8px); }
+.plan-card.featured::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 3px;
+background: linear-gradient(to right, #888, #fff, #888);
+}
+
+.plan-badge {
+display: inline-block;
+font-size: 10px;
+letter-spacing: 2px;
+padding: 4px 12px;
+border-radius: 20px;
+margin-bottom: 20px;
+text-transform: uppercase;
+font-weight: 600;
+}
+.badge-starter { background: #1a1a1a; color: #666; border: 1px solid #2a2a2a; }
+.badge-pro { background: linear-gradient(135deg, #1f1f1f, #2a2a2a); color: var(–silver); border: 1px solid var(–silver); }
+.badge-elite { background: #1a1a1a; color: #666; border: 1px solid #2a2a2a; }
+
+.plan-name {
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 28px;
+font-weight: 700;
+letter-spacing: 2px;
+color: var(–white);
+margin-bottom: 6px;
+}
+.plan-tagline {
+font-size: 12px;
+color: #555;
+margin-bottom: 24px;
+letter-spacing: 1px;
+}
+.plan-price {
+margin-bottom: 28px;
+}
+.price-from {
+font-size: 11px;
+color: #555;
+letter-spacing: 2px;
+text-transform: uppercase;
+}
+.price-amount {
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 38px;
+font-weight: 700;
+color: var(–white);
+line-height: 1;
+}
+.price-amount span { font-size: 20px; color: var(–accent); }
+.price-range {
+font-size: 12px;
+color: #555;
+margin-top: 4px;
+}
+
+.plan-divider {
+height: 1px;
+background: var(–border);
+margin-bottom: 24px;
+}
+
+.plan-features {
+list-style: none;
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+.plan-features li {
+display: flex;
+align-items: flex-start;
+gap: 10px;
+font-size: 13px;
+color: #aaa;
+line-height: 1.4;
+}
+.check {
+width: 16px; height: 16px;
+border-radius: 50%;
+background: #1f1f1f;
+border: 1px solid #333;
+display: flex; align-items: center; justify-content: center;
+flex-shrink: 0;
+margin-top: 1px;
+font-size: 9px;
+color: var(–silver);
+}
+.plan-card.featured .check {
+background: #2a2a2a;
+border-color: var(–silver);
+}
+
+/* SLIDE 4 - CONTACTO */
+.slide-contact {
+background: radial-gradient(ellipse at center, #141414 0%, #0a0a0a 80%);
+flex-direction: column;
+gap: 40px;
+text-align: center;
+}
+.contact-grid {
+display: flex;
+gap: 20px;
+flex-wrap: wrap;
+justify-content: center;
+max-width: 700px;
+}
+.contact-item {
+background: var(–card);
+border: 1px solid var(–border);
+border-radius: 14px;
+padding: 24px 32px;
+display: flex;
+align-items: center;
+gap: 16px;
+min-width: 220px;
+transition: border-color 0.3s, transform 0.3s;
+}
+.contact-item:hover {
+border-color: var(–silver);
+transform: translateY(-4px);
+}
+.contact-icon {
+font-size: 24px;
+}
+.contact-label {
+font-size: 10px;
+letter-spacing: 2px;
+color: #555;
+text-transform: uppercase;
+margin-bottom: 4px;
+}
+.contact-value {
+font-size: 14px;
+color: var(–silver-light);
+font-weight: 500;
+}
+
+.closing-text {
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 18px;
+letter-spacing: 4px;
+color: #444;
+text-transform: uppercase;
+}
+
+/* FOOTER LOGO */
+.footer-logo {
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 32px;
+font-weight: 700;
+letter-spacing: 4px;
+background: linear-gradient(135deg, #fff, #666);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+/* WHATSAPP BUTTON */
+.wa-btn {
+position: fixed;
+bottom: 28px;
+left: 28px;
+width: 58px; height: 58px;
+background: #25D366;
+border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+z-index: 999;
+cursor: pointer;
+text-decoration: none;
+transition: transform 0.3s, box-shadow 0.3s;
+animation: waPulse 2.5s ease-in-out infinite;
+}
+.wa-btn:hover {
+transform: scale(1.12);
+box-shadow: 0 6px 28px rgba(37,211,102,0.6);
+}
+.wa-btn svg { width: 30px; height: 30px; fill: white; }
+.wa-tooltip {
+position: fixed;
+bottom: 36px;
+left: 96px;
+background: #1a1a1a;
+border: 1px solid #2a2a2a;
+color: #ccc;
+font-size: 13px;
+padding: 8px 14px;
+border-radius: 8px;
+white-space: nowrap;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.3s;
+z-index: 999;
+}
+.wa-btn:hover + .wa-tooltip { opacity: 1; }
+@keyframes waPulse {
+0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+50% { box-shadow: 0 4px 32px rgba(37,211,102,0.7); }
+}
+
+@media (max-width: 768px) {
+.services-grid, .plans-grid { grid-template-columns: 1fr; }
+.plan-card.featured { transform: none; }
+.logo-text { font-size: 48px; }
+.contact-grid { flex-direction: column; align-items: center; }
+.nav-dots { display: none; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAV DOTS -->
+
+<div class="nav-dots">
+  <div class="nav-dot active" onclick="scrollTo(0)"></div>
+  <div class="nav-dot" onclick="document.getElementById('servicios').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="nav-dot" onclick="document.getElementById('planes').scrollIntoView({behavior:'smooth'})"></div>
+  <div class="nav-dot" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})"></div>
+</div>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+
+<a class="wa-btn" href="https://wa.me/5434915617533" target="_blank">
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 .5C7.44.5.5 7.44.5 16c0 2.72.7 5.28 1.93 7.5L.5 31.5l8.22-1.9A15.45 15.45 0 0016 31.5C24.56 31.5 31.5 24.56 31.5 16S24.56.5 16 .5zm0 28.1a13.57 13.57 0 01-6.9-1.88l-.5-.3-5.1 1.18 1.22-4.96-.33-.52A13.6 13.6 0 1116 28.6zm7.44-10.2c-.4-.2-2.38-1.17-2.75-1.3-.37-.14-.63-.2-.9.2s-1.03 1.3-1.27 1.57c-.23.26-.46.3-.86.1-.4-.2-1.7-.63-3.24-2-1.2-1.07-2-2.38-2.24-2.78-.23-.4-.02-.62.18-.82.18-.18.4-.47.6-.7.2-.23.26-.4.4-.66.13-.26.07-.5-.03-.7-.1-.2-.9-2.16-1.23-2.96-.32-.78-.65-.67-.9-.68l-.76-.01c-.27 0-.7.1-1.06.5s-1.4 1.36-1.4 3.32 1.43 3.85 1.63 4.12c.2.26 2.82 4.3 6.83 6.03.95.41 1.7.66 2.28.84.96.3 1.83.26 2.52.16.77-.11 2.38-.97 2.72-1.91.33-.94.33-1.74.23-1.91-.1-.17-.36-.27-.76-.47z"/>
+  </svg>
+</a>
+<div class="wa-tooltip">¡Escribinos por WhatsApp!</div>
+
+<!-- SLIDE 1: HERO -->
+
+<section class="slide slide-hero" id="inicio">
+  <div class="logo-container">
+    <div class="logo-text">SCALE</div>
+    <div class="logo-sub">360</div>
+  </div>
+  <div class="hero-divider"></div>
+  <p class="hero-tagline">Agencia de Marketing Digital</p>
+  <p class="hero-desc">Hacemos crecer tu negocio con estrategias digitales que generan resultados reales. Publicidad, presencia web y escala.</p>
+  <div class="scroll-hint">↓ scroll</div>
+</section>
+
+<!-- SLIDE 2: SERVICIOS -->
+
+<section class="slide slide-services" id="servicios">
+  <div class="section-header">
+    <p class="section-label">Lo que hacemos</p>
+    <h2 class="section-title">Nuestros <span>Servicios</span></h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🎯</div>
+      <div class="service-name">META ADS</div>
+      <p class="service-desc">Campañas publicitarias en Facebook e Instagram optimizadas para generar ventas y leads de calidad.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🌐</div>
+      <div class="service-name">PÁGINA WEB</div>
+      <p class="service-desc">Diseño y desarrollo de tiendas online profesionales a través de Tienda Nube, listas para vender.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <div class="service-name">CONTENIDO ORGÁNICO</div>
+      <p class="service-desc">Estrategia de contenido para redes sociales que construye comunidad y potencia tu marca en el tiempo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: PLANES -->
+
+<section class="slide slide-plans" id="planes">
+  <div class="section-header">
+    <p class="section-label">Elige tu plan</p>
+    <h2 class="section-title">Planes & <span>Precios</span></h2>
+  </div>
+  <div class="plans-grid">
+
+```
+<!-- STARTER -->
+<div class="plan-card">
+  <div class="plan-badge badge-starter">Starter</div>
+  <div class="plan-name">STARTER</div>
+  <div class="plan-tagline">Ideal para empezar a escalar</div>
+  <div class="plan-price">
+    <div class="price-from">desde</div>
+    <div class="price-amount"><span>$</span>80.000</div>
+    <div class="price-range">hasta $120.000 / mes</div>
+  </div>
+  <div class="plan-divider"></div>
+  <ul class="plan-features">
+    <li><div class="check">✓</div> Gestión de Meta Ads (Facebook + Instagram)</li>
+    <li><div class="check">✓</div> 1 campaña activa optimizada</li>
+    <li><div class="check">✓</div> Informe mensual de resultados</li>
+    <li><div class="check">✓</div> Configuración inicial del píxel</li>
+    <li><div class="check">✓</div> Soporte por WhatsApp</li>
+  </ul>
+</div>
+
+<!-- PRO (FEATURED) -->
+<div class="plan-card featured">
+  <div class="plan-badge badge-pro">⭐ Más elegido</div>
+  <div class="plan-name">PRO</div>
+  <div class="plan-tagline">El equilibrio perfecto</div>
+  <div class="plan-price">
+    <div class="price-from">desde</div>
+    <div class="price-amount"><span>$</span>200.000</div>
+    <div class="price-range">hasta $250.000 / mes</div>
+  </div>
+  <div class="plan-divider"></div>
+  <ul class="plan-features">
+    <li><div class="check">✓</div> Gestión completa de Meta Ads</li>
+    <li><div class="check">✓</div> Hasta 3 campañas activas</li>
+    <li><div class="check">✓</div> Diseño de creatividades para anuncios</li>
+    <li><div class="check">✓</div> Landing page o página web en Tienda Nube</li>
+    <li><div class="check">✓</div> Reportes semanales</li>
+    <li><div class="check">✓</div> Estrategia de contenido orgánico</li>
+    <li><div class="check">✓</div> Reunión mensual de seguimiento</li>
+  </ul>
+</div>
+
+<!-- ELITE -->
+<div class="plan-card">
+  <div class="plan-badge badge-elite">Elite</div>
+  <div class="plan-name">ELITE</div>
+  <div class="plan-tagline">Para marcas que quieren dominar</div>
+  <div class="plan-price">
+    <div class="price-from">desde</div>
+    <div class="price-amount"><span>$</span>500.000</div>
+    <div class="price-range">y más / mes</div>
+  </div>
+  <div class="plan-divider"></div>
+  <ul class="plan-features">
+    <li><div class="check">✓</div> Gestión avanzada de Meta Ads</li>
+    <li><div class="check">✓</div> Campañas ilimitadas y A/B testing</li>
+    <li><div class="check">✓</div> Sitio web completo en Tienda Nube</li>
+    <li><div class="check">✓</div> Creatividades premium para anuncios</li>
+    <li><div class="check">✓</div> Estrategia de contenido orgánico full</li>
+    <li><div class="check">✓</div> Reportes en tiempo real</li>
+    <li><div class="check">✓</div> Account manager dedicado</li>
+    <li><div class="check">✓</div> Reuniones quincenales</li>
+  </ul>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- SLIDE 4: CONTACTO -->
+
+<section class="slide slide-contact" id="contacto">
+  <div class="section-header">
+    <p class="section-label">Hablemos</p>
+    <h2 class="section-title">¿Listo para <span>escalar?</span></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-item">
+      <div class="contact-icon">📱</div>
+      <div>
+        <div class="contact-label">WhatsApp</div>
+        <div class="contact-value">+54 3491 56-1753</div>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">✉️</div>
+      <div>
+        <div class="contact-label">Email</div>
+        <div class="contact-value">perriggerman1@gmail.com</div>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📸</div>
+      <div>
+        <div class="contact-label">Instagram</div>
+        <div class="contact-value">@Scale360.agency</div>
+      </div>
+    </div>
+  </div>
+  <p class="closing-text">Tu crecimiento comienza hoy</p>
+  <div class="footer-logo">SCALE 360</div>
+</section>
+
+<script>
+  // Nav dots update on scroll
+  const sections = ['inicio','servicios','planes','contacto'];
+  const dots = document.querySelectorAll('.nav-dot');
+
+  window.addEventListener('scroll', () => {
+    let current = 0;
+    sections.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - window.innerHeight/2) current = i;
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  });
+</script>
+
+</body>
+</html>
